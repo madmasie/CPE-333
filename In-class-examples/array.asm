@@ -51,21 +51,24 @@ li t2, 0            #reset j to 0
 
 .1after_i:
 
-    #load the j into t6
-    #a is in a0
-    li t1, 2    
-    li t2, 2            #load 2 into t2
-    slli t3, 2          #shift left logical immediate t2 by 2
-    addi t0, a0, t3     #add base address a + offset byte
-    lw t6, 0(t0)        #load t0 into t6 (t6 should have a 3)
-
-
-    #new stuff, test 4?
-    li t1, 2            #i into 2
-    li t2, 1            #j = 1
-    slli t3, 
-    add t0, a0, t3      # a((i*size + j)*4)
-    lw t5, 0(t0)
+.lafter_i:
+  # test #2, see if we can load a[2]
+  # load the 3 into t6
+  # a is in a0 
+  # li t2, 3 # access 3rd element
+  # slli t3, t2, 2 # figure out number of bytes for offset
+  # add t0, a0, t3 # base address a + offset bytes
+  # lw t6, 0(t0)
+  
+  # test 4?
+  # load a[2][1]
+  li t1, 2 # i = 2
+  li t2, 1 # j = 1
+  slli t3, t1, 2 # i * size
+  add t3, t3, t2 # i * size + j
+  slli t3, t3, 2 # (i * size + j) * 4 
+  add t0, a0, t3 # a[(i*size + j)*4]
+  lw  t5, 0(t0)  # load it
 
 EXIT:
 
